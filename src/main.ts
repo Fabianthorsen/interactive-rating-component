@@ -1,23 +1,37 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+const ratings = Array.from(document.getElementsByClassName("rating"));
+let chosenRating: string = "0";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+for (let rating of ratings) {
+  rating.addEventListener("click", () => {
+    for (let r of ratings) {
+      r.classList.remove("selected");
+    }
+    rating.classList.add("selected");
+    chosenRating = document.getElementsByClassName("selected")[0].innerHTML;
+  });
+}
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+function hideMain() {
+  document.getElementsByClassName("star")[0];
+}
+
+const btn = document.getElementsByTagName("button")[0];
+btn.addEventListener("click", () => {
+  const inner = `
+   <div>
+    <img src="../images/illustration-thank-you.svg"/>
+   </div>
+   <div class="outlined">
+    <p class="primary">You selected ${chosenRating} out of 5</p>
+   </div>
+   <h1>Thank you!</h1>
+   <p class="center">
+    We appreciate you taking the time to give a rating. If you ever need more support,
+    don’t hesitate to get in touch!
+   </p>
+`;
+
+  const card = document.getElementsByClassName("card")[0];
+  card.innerHTML = inner;
+  card.classList.add("card-flex-center");
+});
